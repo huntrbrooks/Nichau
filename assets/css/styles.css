@@ -337,6 +337,7 @@ p { margin: 0; }
   text-transform: uppercase;
   /* The trailing letter-spacing would push the word off-centre. */
   padding-left: 0.32em;
+  white-space: nowrap;
 }
 .rule-title::before,
 .rule-title::after {
@@ -371,7 +372,7 @@ p { margin: 0; }
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
   gap: 2.75rem clamp(2.5rem, 6vw, 5rem);
 }
-.menu__col { display: grid; gap: 2.75rem; align-content: start; min-width: 0; }
+.menu__group { min-width: 0; }
 
 .menu__heading {
   display: flex;
@@ -432,6 +433,13 @@ p { margin: 0; }
   color: var(--bone-dim);
   font-size: var(--step--1);
   line-height: 1.5;
+}
+
+.menu__aside {
+  margin-top: 0.9rem;
+  color: var(--bone-dim);
+  font-size: var(--step--1);
+  font-style: italic;
 }
 
 .menu__footnote {
@@ -784,6 +792,9 @@ p { margin: 0; }
 }
 
 @media (max-width: 420px) {
+  .rule-title { gap: 0.7rem; letter-spacing: 0.22em; padding-left: 0.22em; }
+  .rule-title::before,
+  .rule-title::after { min-width: 1.25rem; }
   .masthead .btn--small { padding-inline: 0.9rem; }
   .brand { font-size: 1.05rem; letter-spacing: 0.18em; }
   .hero__actions { display: grid; width: 100%; max-width: 22rem; }

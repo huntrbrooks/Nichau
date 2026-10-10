@@ -32,7 +32,7 @@ python3 -m http.server 8000
 
 | What | Where |
 | --- | --- |
-| Prices and services | `index.html`, the `#services` section. Each service is one `<li class="item">`. |
+| Prices and services | `index.html`, the `#services` section. Each service is one `<li class="item">`: women’s cut $130, men’s cut $105, colour from $110 an hour. |
 | Booking link | `index.html`. Replace every `https://qrc-ai.com/rGX1a` (5 places), then regenerate the QR code (below). |
 | Phone number | `index.html`. Replace `tel:+61402810111` and the visible `0402 810 111`. Also update the JSON-LD block in `<head>`. |
 | Hours | `index.html`, the Hours row in the `#visit` section. |
@@ -52,7 +52,6 @@ node qr.mjs "https://your-booking-page"  # QR for a different link
 ## Before launch
 
 - **Booking link.** The QR code on the printed card encodes `https://qrc-ai.com/rGX1a`, a dynamic-QR redirect. The site uses the same link, so it opens the same page as the card. Linking straight to the final booking page skips the redirect.
-- **Prices.** The figures shown are placeholder "from" prices, set from what comparable Richmond salons charge. Replace them with the real price list.
 - **Hours.** Currently "By appointment". Add opening days if there are set hours.
 - **Social links.** No Instagram or Facebook link is included yet.
-- **Domain.** The site is set up for `https://nichau.me` (canonical URL, `og:image`, JSON-LD). Update those three in `<head>` if the domain changes.
+- **Domain.** The site lives at `https://www.nichau.me` (`nichau.me` redirects there). The canonical URL, `og:image` and JSON-LD in `<head>` use that address, so update them if the primary domain changes.
