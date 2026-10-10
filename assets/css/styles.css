@@ -1,0 +1,796 @@
+/* Nic Hau Hairdressing
+   Layout: one symmetric axis, like the card's emblem. Sections hang off it
+   under the card's dot-tipped title rules, and the bookings panel copies the
+   card's double gold frame. Matte black stock, hot-foil gold, nothing else. */
+
+:root {
+  --ink: #0E0F13;          /* matte card stock */
+  --ink-raised: #15171D;   /* the card, lifted off the page */
+  --gold: #D9B85A;         /* foil */
+  --gold-bright: #F2DC92;  /* foil catching the light */
+  --gold-deep: #A9872F;    /* foil in shadow */
+  --bone: #E6DEC9;         /* running text */
+  --bone-dim: #A49C88;     /* notes, captions */
+  --hairline: rgba(217, 184, 90, 0.32);
+
+  --foil: linear-gradient(115deg, #A9872F 0%, #E8CC78 22%, #C6A246 40%, #F2DC92 58%, #B48F37 78%, #DDBF68 100%);
+
+  --display: "Marcellus", "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --caps: "Marcellus SC", "Marcellus", Georgia, "Times New Roman", serif;
+  --body: "Cormorant Garamond", "Iowan Old Style", Georgia, "Times New Roman", serif;
+
+  --step--1: 0.95rem;
+  --step-0: 1.1875rem;
+  --step-1: clamp(1.3rem, 1.15rem + 0.6vw, 1.55rem);
+  --step-2: clamp(1.6rem, 1.3rem + 1.3vw, 2.25rem);
+  --step-3: clamp(2rem, 1.5rem + 2.2vw, 3.1rem);
+
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --measure: 38rem;
+  --wide: 68rem;
+  --masthead-h: 4rem;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--masthead-h) + env(safe-area-inset-top, 0px) + 1rem);
+  -webkit-text-size-adjust: 100%;
+  background: var(--ink);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--ink);
+  /* A whisper of grain so the black reads as card stock, not a screen. */
+  background-image:
+    radial-gradient(90% 60% at 50% 0%, rgba(217, 184, 90, 0.035), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .03 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  color: var(--bone);
+  font-family: var(--body);
+  font-size: var(--step-0);
+  font-weight: 500;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg { display: block; max-width: 100%; }
+
+a { color: inherit; }
+
+h1, h2, h3 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+p { margin: 0; }
+
+:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: var(--caps);
+  text-decoration: none;
+}
+.skip:focus { top: calc(env(safe-area-inset-top, 0px) + 0.75rem); }
+
+/* Foil text ---------------------------------------------------------------- */
+
+.hero__title,
+.rule-title,
+.studio__headline,
+.footer__name {
+  color: var(--gold);
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hero__title,
+  .rule-title,
+  .studio__headline,
+  .footer__name {
+    background: var(--foil);
+    background-size: 160% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Buttons ------------------------------------------------------------------ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 3px;
+  font-family: var(--caps);
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  transition: background-position 600ms ease, box-shadow 200ms ease, color 200ms ease, transform 200ms ease;
+}
+
+.btn--foil {
+  background: var(--foil);
+  background-size: 200% 100%;
+  background-position: 0% 0;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px rgba(255, 246, 216, 0.35);
+}
+.btn--foil:hover { background-position: 100% 0; }
+
+/* Outline button with the card's double rule. */
+.btn--line {
+  color: var(--gold);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--gold), inset 0 0 0 4px var(--ink), inset 0 0 0 5px var(--hairline);
+}
+.btn--line:hover {
+  color: var(--gold-bright);
+  box-shadow: inset 0 0 0 1px var(--gold-bright), inset 0 0 0 4px var(--ink), inset 0 0 0 5px var(--gold);
+}
+
+.btn--small { min-height: 2.5rem; padding: 0.45rem 1.1rem; font-size: 0.85rem; }
+
+.link {
+  color: var(--gold);
+  text-decoration: underline;
+  text-decoration-color: var(--hairline);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 200ms ease, color 200ms ease;
+}
+.link:hover { color: var(--gold-bright); text-decoration-color: currentColor; }
+
+/* Masthead ----------------------------------------------------------------- */
+
+.masthead {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  border-bottom: 1px solid transparent;
+  transition: background-color 300ms ease, border-color 300ms ease;
+}
+.masthead.is-scrolled {
+  background-color: rgba(14, 15, 19, 0.86);
+  border-bottom-color: rgba(217, 184, 90, 0.16);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.masthead__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: var(--wide);
+  min-height: var(--masthead-h);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--gold);
+  font-family: var(--display);
+  font-size: 1.2rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.brand__spark { width: 0.85rem; height: 0.85rem; }
+
+.nav {
+  display: flex;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  margin-left: auto;
+  margin-right: 1.25rem;
+}
+.nav a {
+  position: relative;
+  color: var(--bone-dim);
+  font-family: var(--caps);
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -0.45rem;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0;
+  transform: translateX(-50%);
+  transition: opacity 200ms ease;
+}
+.nav a:hover { color: var(--gold); }
+.nav a:hover::after { opacity: 1; }
+
+/* Hero --------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  padding: clamp(1rem, 4vw, 2.5rem) var(--gutter) clamp(3.5rem, 8vw, 6rem);
+  text-align: center;
+  isolation: isolate;
+}
+
+.hero__sky {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.twinkle {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--s);
+  height: var(--s);
+  color: var(--gold);
+  opacity: 0.45;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .twinkle { animation: twinkle 5s ease-in-out var(--d) infinite; }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.18); }
+}
+
+.hero__emblem {
+  width: min(34rem, 88vw);
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
+.hero__title {
+  max-width: 22ch;
+  font-size: var(--step-2);
+  letter-spacing: 0.04em;
+}
+
+.hero__lede {
+  max-width: 34rem;
+  color: var(--bone);
+  font-size: var(--step-1);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+/* Sections ----------------------------------------------------------------- */
+
+.section {
+  max-width: var(--wide);
+  margin-inline: auto;
+  padding: clamp(3.5rem, 8vw, 6.5rem) var(--gutter);
+  border-top: 1px solid rgba(217, 184, 90, 0.12);
+}
+
+/* The card's title device: a dot, a rule, the word, a rule, a dot. */
+.rule-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0 auto 1.5rem;
+  font-family: var(--caps);
+  font-size: var(--step-1);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  /* The trailing letter-spacing would push the word off-centre. */
+  padding-left: 0.32em;
+}
+.rule-title::before,
+.rule-title::after {
+  content: "";
+  flex: 0 1 5.5rem;
+  min-width: 2rem;
+  height: 7px;
+  background:
+    radial-gradient(circle, var(--gold) 0 2.5px, transparent 3px) no-repeat,
+    linear-gradient(var(--gold), var(--gold)) no-repeat;
+  background-size: 7px 7px, calc(100% - 4px) 1px;
+}
+.rule-title::before { background-position: left center, right center; }
+.rule-title::after { background-position: right center, left center; }
+
+.section__lede {
+  max-width: var(--measure);
+  margin: 0 auto clamp(2.5rem, 5vw, 3.5rem);
+  color: var(--bone);
+  font-size: var(--step-1);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* Services menu ------------------------------------------------------------ */
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: 2.75rem clamp(2.5rem, 6vw, 5rem);
+}
+.menu__col { display: grid; gap: 2.75rem; align-content: start; min-width: 0; }
+
+.menu__heading {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding-bottom: 0.85rem;
+  margin-bottom: 0.4rem;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--gold);
+  font-family: var(--caps);
+  font-size: 1.05rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.menu__heading svg { width: 1rem; height: 1rem; flex: none; }
+
+.menu__list { margin: 0; padding: 0; list-style: none; }
+
+.item { padding-block: 0.9rem; border-bottom: 1px solid rgba(217, 184, 90, 0.1); }
+.item:last-child { border-bottom: 0; }
+
+.item__row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+.item__name {
+  min-width: 0;
+  color: var(--bone);
+  font-family: var(--display);
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+}
+.item__leader {
+  flex: 1 1 1.5rem;
+  min-width: 1.5rem;
+  border-bottom: 1px dotted rgba(217, 184, 90, 0.45);
+  transform: translateY(-0.3em);
+}
+.item__price {
+  flex: none;
+  color: var(--gold);
+  font-family: var(--body);
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-variant-numeric: lining-nums;
+  white-space: nowrap;
+}
+.item__price small {
+  color: var(--bone-dim);
+  font-size: 0.95rem;
+  font-style: italic;
+  font-weight: 500;
+}
+.item__note {
+  margin-top: 0.2rem;
+  max-width: 32rem;
+  color: var(--bone-dim);
+  font-size: var(--step--1);
+  line-height: 1.5;
+}
+
+.menu__footnote {
+  max-width: var(--measure);
+  margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+  color: var(--bone-dim);
+  font-size: var(--step--1);
+  font-style: italic;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* Studio ------------------------------------------------------------------- */
+
+.studio__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: start;
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.studio__text { display: grid; gap: 1.1rem; max-width: var(--measure); }
+.studio__headline {
+  font-family: var(--display);
+  font-size: var(--step-3);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+.studio__text p:not(.studio__headline) { color: var(--bone); }
+
+.studio__aside { display: grid; gap: 2rem; }
+
+.stars { display: grid; gap: 0.9rem; margin: 0; padding: 0; list-style: none; }
+.stars li {
+  display: grid;
+  grid-template-columns: 1rem 1fr;
+  gap: 0.85rem;
+  align-items: baseline;
+  color: var(--bone);
+}
+.stars svg { width: 0.85rem; height: 0.85rem; color: var(--gold); transform: translateY(0.1em); }
+
+/* A small heritage plate, like the ones fixed beside old shopfronts. */
+.plaque {
+  position: relative;
+  padding: 1.4rem 1.5rem;
+  border: 1px solid var(--gold-deep);
+  border-radius: 6px;
+  background: linear-gradient(160deg, rgba(217, 184, 90, 0.1), rgba(217, 184, 90, 0.02));
+  text-align: center;
+}
+.plaque::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  pointer-events: none;
+}
+.plaque__label {
+  color: var(--bone-dim);
+  font-family: var(--caps);
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.plaque__name {
+  margin-top: 0.35rem;
+  color: var(--gold);
+  font-family: var(--display);
+  font-size: 1.3rem;
+  line-height: 1.25;
+}
+.plaque__dates {
+  margin-top: 0.25rem;
+  color: var(--bone-dim);
+  font-size: var(--step--1);
+  font-style: italic;
+}
+
+/* Book + visit ------------------------------------------------------------- */
+
+.visit__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: start;
+}
+
+/* The back of the business card, rebuilt. */
+.bookcard {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 1.1rem;
+  padding: clamp(2.25rem, 6vw, 3rem) clamp(1.75rem, 5vw, 2.75rem);
+  border-radius: 30px;
+  background: var(--ink-raised);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  text-align: center;
+}
+.bookcard::before,
+.bookcard::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border-style: solid;
+  border-color: var(--gold);
+}
+.bookcard::before { inset: 12px; border-width: 1.5px; border-radius: 20px; }
+.bookcard::after { inset: 18px; border-width: 1px; border-radius: 15px; opacity: 0.85; }
+
+.rule-title--card {
+  margin-bottom: 0.25rem;
+  font-size: 1.15rem;
+  letter-spacing: 0.26em;
+  padding-left: 0.26em;
+}
+.rule-title--card::before,
+.rule-title--card::after { flex-basis: 3.5rem; min-width: 1.5rem; }
+
+.bookcard__qr {
+  display: block;
+  width: min(13rem, 62vw);
+  padding: 0.25rem;
+  border-radius: 8px;
+  transition: transform 300ms ease;
+}
+.bookcard__qr:hover { transform: scale(1.02); }
+.bookcard__qr img { width: 100%; height: auto; }
+
+.bookcard__hint {
+  color: var(--bone-dim);
+  font-size: var(--step--1);
+  font-style: italic;
+}
+
+.bookcard__address {
+  margin-top: 0.4rem;
+  color: var(--gold);
+  font-family: var(--display);
+  font-size: 1rem;
+  font-style: normal;
+  letter-spacing: 0.12em;
+  line-height: 1.7;
+  text-transform: uppercase;
+}
+.bookcard__address a { text-decoration: none; letter-spacing: 0.16em; }
+.bookcard__address a:hover { color: var(--gold-bright); }
+
+.visit__details { display: grid; gap: 2.5rem; min-width: 0; }
+
+.facts { display: grid; gap: 1.25rem; margin: 0; }
+.facts > div {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(217, 184, 90, 0.12);
+}
+.facts dt {
+  padding-top: 0.2rem;
+  color: var(--gold);
+  font-family: var(--caps);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.facts dd { margin: 0; color: var(--bone); }
+
+/* Tram 78 strip map: the line runs down Church St, stops hang off it. */
+.tram__title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  color: var(--gold);
+  font-family: var(--caps);
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.tram__badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2.2rem;
+  height: 2.2rem;
+  padding-inline: 0.4rem;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  color: var(--gold);
+  font-family: var(--display);
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+
+.tram__line {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 2.25rem;
+  list-style: none;
+}
+.tram__line::before {
+  content: "";
+  position: absolute;
+  left: 0.6rem;
+  top: 1.3rem;
+  bottom: 1.3rem;
+  width: 2px;
+  background: linear-gradient(var(--gold-deep), var(--gold) 50%, var(--gold-deep));
+}
+
+.tram__line > li {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.75rem;
+  min-height: 2.6rem;
+  padding-block: 0.35rem;
+}
+.tram__line > li::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  /* Centre every marker on the line drawn by .tram__line::before. */
+  left: calc(-1.65rem + 1px);
+  transform: translate(-50%, -50%);
+}
+
+.tram__end {
+  color: var(--bone-dim);
+  font-size: var(--step--1);
+  font-style: italic;
+}
+.tram__line > .tram__end::before {
+  width: 0.65rem;
+  height: 0.65rem;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.tram__line > .tram__stop::before {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+/* Cross streets take the card's diamond terminal. */
+.tram__line > .tram__stop--cross::before {
+  width: 0.8rem;
+  height: 0.8rem;
+  border: 1.5px solid var(--gold);
+  border-radius: 1px;
+  background: var(--ink);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* The salon's stop gets the card's four-point star. */
+.tram__line > .tram__stop--here::before {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0;
+  background: var(--gold);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-50 -50 100 100'%3E%3Cpath d='M0 -50L8 -8L50 0L8 8L0 50L-8 8L-50 0L-8 -8Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-50 -50 100 100'%3E%3Cpath d='M0 -50L8 -8L50 0L8 8L0 50L-8 8L-50 0L-8 -8Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.tram__stop--here .tram__name { color: var(--gold); }
+.tram__stop--here .tram__meta { color: var(--gold); }
+
+.tram__num {
+  min-width: 1.6rem;
+  color: var(--bone-dim);
+  font-family: var(--display);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+.tram__name { color: var(--bone); font-family: var(--display); font-size: 1.05rem; letter-spacing: 0.02em; }
+.tram__meta { color: var(--bone-dim); font-size: var(--step--1); font-style: italic; }
+
+.tram__note {
+  margin-top: 1rem;
+  color: var(--bone-dim);
+  font-size: var(--step--1);
+  font-style: italic;
+}
+
+/* Footer ------------------------------------------------------------------- */
+
+.footer {
+  display: grid;
+  justify-items: center;
+  gap: 0.4rem;
+  padding: clamp(3rem, 8vw, 5rem) var(--gutter) clamp(2.5rem, 6vw, 4rem);
+  border-top: 1px solid rgba(217, 184, 90, 0.12);
+  text-align: center;
+}
+.footer__emblem { width: 7.5rem; height: auto; margin-bottom: 0.75rem; opacity: 0.9; }
+.footer__name {
+  font-family: var(--caps);
+  font-size: 1rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+.footer__meta { color: var(--bone-dim); font-size: var(--step--1); }
+.footer__meta a { color: var(--bone); text-decoration: none; }
+.footer__meta a:hover { color: var(--gold); }
+.footer__small { margin-top: 0.75rem; color: var(--bone-dim); font-size: 0.85rem; opacity: 0.75; }
+
+/* Mobile dock -------------------------------------------------------------- */
+
+.dock { display: none; }
+
+/* Responsive --------------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .studio__grid,
+  .visit__grid { grid-template-columns: minmax(0, 1fr); }
+  .bookcard { width: 100%; max-width: 26rem; justify-self: center; }
+}
+
+@media (max-width: 720px) {
+  .nav { display: none; }
+  .masthead__inner { min-height: 3.5rem; }
+
+  .dock {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 0.6rem;
+    padding: 0.7rem var(--gutter) calc(0.7rem + env(safe-area-inset-bottom, 0px));
+    background: rgba(14, 15, 19, 0.92);
+    border-top: 1px solid rgba(217, 184, 90, 0.2);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: transform 300ms ease;
+  }
+  .dock.is-tucked { transform: translateY(110%); }
+  .footer { padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px)); }
+
+  .facts > div { grid-template-columns: minmax(0, 1fr); gap: 0.35rem; }
+}
+
+@media (max-width: 420px) {
+  .masthead .btn--small { padding-inline: 0.9rem; }
+  .brand { font-size: 1.05rem; letter-spacing: 0.18em; }
+  .hero__actions { display: grid; width: 100%; max-width: 22rem; }
+  .item__name, .item__price { font-size: 1.05rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
