@@ -1,0 +1,12 @@
+{
+  "name": "Nic Hau Hairdressing",
+  "short_name": "Nic Hau",
+  "start_url": "./",
+  "display": "browser",
+  "background_color": "#0E0F13",
+  "theme_color": "#0E0F13",
+  "icons": [
+    { "src": "assets/img/favicon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "assets/img/apple-touch-icon.png", "type": "image/png", "sizes": "180x180" }
+  ]
+}

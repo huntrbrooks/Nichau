@@ -1,0 +1,16 @@
+{
+  "name": "nichau-brand-tools",
+  "private": true,
+  "type": "module",
+  "description": "Regenerates the emblem and bookings QR code SVGs used by the site.",
+  "scripts": {
+    "emblem": "node emblem.mjs",
+    "qr": "node qr.mjs",
+    "build": "node emblem.mjs && node qr.mjs"
+  },
+  "devDependencies": {
+    "@fontsource/marcellus": "^5.2.5",
+    "opentype.js": "^1.3.4",
+    "qrcode": "^1.5.4"
+  }
+}
