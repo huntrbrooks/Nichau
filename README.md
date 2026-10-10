@@ -55,4 +55,4 @@ node qr.mjs "https://your-booking-page"  # QR for a different link
 - **Prices.** The figures shown are placeholder "from" prices, set from what comparable Richmond salons charge. Replace them with the real price list.
 - **Hours.** Currently "By appointment". Add opening days if there are set hours.
 - **Social links.** No Instagram or Facebook link is included yet.
-- **Domain.** Once the site has a domain, make the `og:image` URL in `<head>` absolute (for example `https://example.com/assets/img/og-image.png`) so link previews show the image.
+- **Domain.** The site is set up for `https://nichau.me` (canonical URL, `og:image`, JSON-LD). Update those three in `<head>` if the domain changes.
